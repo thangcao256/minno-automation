@@ -1,0 +1,28 @@
+{
+  "products": [
+    { "id": 1, "name": "iPhone 15 Pro Max 256GB", "category": "Điện tử", "price": 34990000, "cost": 30000000, "stock": 50, "sku": "IP15PM-BLUE-256" },
+    { "id": 2, "name": "Áo thun Polo Nam Cotton", "category": "Thời trang", "price": 250000, "cost": 120000, "stock": 200, "sku": "POLO-M-WHITE" },
+    { "id": 3, "name": "Bàn phím cơ Keychron K2", "category": "Phụ kiện", "price": 1850000, "cost": 1400000, "stock": 30, "sku": "KEY-K2-V2" },
+    { "id": 4, "name": "Sữa đặc có đường Vinamilk", "category": "Thực phẩm", "price": 18000, "cost": 15000, "stock": 500, "sku": "MILK-VNM-01" },
+    { "id": 5, "name": "Giày chạy bộ Nike Air Zoom", "category": "Thời trang", "price": 3200000, "cost": 2500000, "stock": 15, "sku": "NIKE-AZ-42" },
+    { "id": 6, "name": "Chuột không dây Logitech MX Master 3S", "category": "Phụ kiện", "price": 2490000, "cost": 1900000, "stock": 40, "sku": "LOGI-MX3S-GR" },
+    { "id": 7, "name": "Tai nghe Sony WH-1000XM5", "category": "Điện tử", "price": 7990000, "cost": 6500000, "stock": 25, "sku": "SONY-XM5-BLK" },
+    { "id": 8, "name": "Nồi chiên không dầu Philips", "category": "Gia dụng", "price": 4500000, "cost": 3800000, "stock": 10, "sku": "PHIL-AF-XXL" },
+    { "id": 9, "name": "Tủ lạnh Samsung Inverter 400L", "category": "Gia dụng", "price": 12500000, "cost": 10500000, "stock": 5, "sku": "SAM-RF-400" },
+    { "id": 10, "name": "Kem chống nắng Anessa 60ml", "category": "Mỹ phẩm", "price": 550000, "cost": 420000, "stock": 100, "sku": "ANE-SUN-60" }
+  ],
+  "customers": [
+    { "name": "Nguyễn Văn A", "phone": "0901234567", "email": "vana@gmail.com", "rank": "Vàng" },
+    { "name": "Trần Thị B", "phone": "0912345678", "email": "thib@yahoo.com", "rank": "Bạc" },
+    { "name": "Lê Văn C", "phone": "0987654321", "email": "vanc@outlook.com", "rank": "Kim cương" },
+    { "name": "Phạm Minh D", "phone": "0933445566", "email": "minhd@minno.vn", "rank": "Đồng" },
+    { "name": "Hoàng Anh E", "phone": "0944556677", "email": "anhe@gmail.com", "rank": "Vàng" }
+  ],
+  "roles": [
+    { "name": "Admin", "permissions": ["all"] },
+    { "name": "Sales", "permissions": ["orders.view", "orders.create", "products.view"] },
+    { "name": "Warehouse", "permissions": ["products.view", "stock.update", "inventory.view"] },
+    { "name": "Accountant", "permissions": ["finance.view", "reports.view", "orders.view"] },
+    { "name": "Store Manager", "permissions": ["orders.*", "products.*", "staff.view"] }
+  ]
+}

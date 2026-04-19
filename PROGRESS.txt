@@ -1,0 +1,33 @@
+# PROJECT: MINNO.VN AUTOMATION TESTING
+# ROLE: Senior QA Automation Engineer
+# DATE: 2026-04-19
+
+## 1. MỤC TIÊU (OBJECTIVES)
+- Xây dựng bộ khung Automation Test E2E bằng Playwright & TypeScript.
+- Tự động hóa các luồng nghiệp vụ quan trọng: Sản phẩm, Đơn hàng, Phân quyền.
+- Tích hợp CI/CD qua GitHub Actions để chạy định kỳ và báo cáo.
+
+## 2. PHÂN TÍCH HỆ THỐNG (ANALYSIS)
+- UI: React, Tailwind CSS (Cần sử dụng data-testid).
+- Logic: Quản lý bán hàng đa kênh (Shopee, TikTok, Lazada, Facebook).
+- Quy trình: Theo chuẩn 5 bước (Phân tích -> Kế hoạch -> Thiết kế -> Thực hiện -> Báo cáo).
+
+## 3. TIẾN ĐỘ (PROGRESS)
+- [x] Nghiên cứu tài liệu nghiệp vụ (Word/Excel).
+- [x] Phân tích cấu trúc UI (HTML Snapshots).
+- [x] Thiết lập chiến lược Selector & Test Scenarios.
+- [x] Chuẩn bị dữ liệu Test (20 mẫu - JSON).
+- [x] Khởi tạo môi trường (Dự thảo Master Flow).
+- [x] Viết file cấu hình GitHub Action (.github/workflows/weekly-test.yml).
+- [x] Hoàn thiện script Playwright mẫu (Master Flow).
+- [x] Kiểm tra và bàn giao.
+
+## 4. CHIẾN LƯỢC SELECTOR ƯU TIÊN
+1. data-testid
+2. placeholder / aria-label
+3. name attribute
+4. text (cho các nút/label cố định)
+
+## 5. GHI CHÚ (NOTES)
+- Cần yêu cầu Dev gắn data-testid vào các form Thêm mới sản phẩm và Cấu hình vai trò.
+- Dữ liệu test cần được làm mới (faker) để tránh trùng SKU.
