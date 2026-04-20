@@ -1,0 +1,7 @@
+playwright
+pytest
+pytest-playwright
+pandas
+openpyxl
+tabulate
+python-dotenv
