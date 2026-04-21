@@ -5,9 +5,15 @@ import os
 import re # Thêm thư viện re để xử lý Regex
 from typing import Generator, Dict
 from dotenv import load_dotenv
+import time
 
 # Nạp các biến từ file .env
 load_dotenv()
+
+@pytest.fixture(scope="session")
+def run_id():
+    """Tạo một ID duy nhất theo thời gian (ví dụ: 2104_1530)"""
+    return time.strftime("%d%m_%H%M")
 
 @pytest.fixture(scope="session")
 def test_data():
@@ -29,16 +35,20 @@ def browser_context_args(browser_context_args):
     }
 
 @pytest.fixture(autouse=True)
-def login_setup(page: Page):
-    """Fixture tự động đăng nhập và chọn đúng cửa hàng dựa trên UI thực tế"""
+def login_setup(page: Page, run_id, test_data):
+    """Fixture tự động đăng nhập và chọn cửa hàng động"""
     base_url = os.getenv("BASE_URL", "https://demo.minno.vn")
     admin_user = os.getenv("ADMIN_USER")
     admin_pass = os.getenv("ADMIN_PASS")
-    store_name = os.getenv("STORE", "TC")
+    
+    # Cửa hàng mặc định hoặc cửa hàng duy nhất của tuần này
+    store_prefix = test_data['permission_test']['store_test']['name_prefix']
+    dynamic_store_name = f"{store_prefix} {run_id}"
+    fallback_store = os.getenv("STORE", "TC")
     
     page.goto(base_url)
     
-    # Nếu Logo đã hiện ra thì coi như đã đăng nhập
+    # ... (giữ nguyên phần login account/pass) ...
     if page.get_by_alt_text("Logo").first.is_visible():
         return
 
@@ -64,12 +74,17 @@ def login_setup(page: Page):
     except:
         pass
     
-    # BƯỚC 3: Chọn cửa hàng
+    # BƯỚC 3: Chọn cửa hàng (Ưu tiên cửa hàng mới của tuần này)
     try:
-        page.wait_for_url(re.compile(r".*/auth/select-stores.*"), timeout=10000, wait_until="commit")
-        store_selector = page.locator("button").filter(has_text=store_name)
-        store_selector.wait_for(state="visible", timeout=10000)
-        store_selector.click()
+        page.wait_for_url(re.compile(r".*/auth/select-stores.*"), timeout=10000)
+        
+        # Thử tìm cửa hàng động trước
+        dynamic_store = page.locator("button").filter(has_text=dynamic_store_name)
+        if dynamic_store.is_visible(timeout=3000):
+            dynamic_store.click()
+        else:
+            # Nếu chưa có thì chọn cửa hàng mặc định (TC)
+            page.locator("button").filter(has_text=fallback_store).click()
     except:
         if "select-stores" in page.url:
             page.locator("button.flex.items-center.w-full").first.click()

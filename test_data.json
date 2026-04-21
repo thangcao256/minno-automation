@@ -24,5 +24,53 @@
     { "name": "Warehouse", "permissions": ["products.view", "stock.update", "inventory.view"] },
     { "name": "Accountant", "permissions": ["finance.view", "reports.view", "orders.view"] },
     { "name": "Store Manager", "permissions": ["orders.*", "products.*", "staff.view"] }
-  ]
+  ],
+  "permission_test": {
+    "roles": [
+      {
+        "key": "warehouse_manager",
+        "name": "Thủ kho E2E",
+        "permissions_to_select": ["Sản phẩm", "Tồn kho"],
+        "visible_menus": ["Sản phẩm", "Tồn kho"],
+        "hidden_menus": ["Tài chính", "Cài đặt"]
+      },
+      {
+        "key": "sales_staff",
+        "name": "Bán hàng E2E",
+        "permissions_to_select": ["Đơn hàng", "Bán hàng (POS)"],
+        "visible_menus": ["Đơn hàng", "Bán hàng"],
+        "hidden_menus": ["Tồn kho", "Tài chính"]
+      }
+    ],
+    "users": [
+      {
+        "email": "thukho_e2e@minno.vn",
+        "full_name": "Nguyễn Văn Kho",
+        "phone": "0911222333",
+        "role_key": "warehouse_manager"
+      },
+      {
+        "email": "banhang_e2e@minno.vn",
+        "full_name": "Trần Thị Sales",
+        "phone": "0944555666",
+        "role_key": "sales_staff"
+      }
+    ],
+    "selectors": {
+      "role_name_placeholder": "Nhập tên vai trò",
+      "staff_name_placeholder": "Họ và tên",
+      "staff_phone_placeholder": "Số điện thoại",
+      "staff_email_placeholder": "Email",
+      "save_button_role": "button",
+      "save_button_name": "Lưu"
+    },
+    "store_test": {
+      "name_prefix": "Cửa hàng E2E",
+      "address": "123 Đường Automation, TP.HCM",
+      "selectors": {
+        "name_placeholder": "Nhập tên cửa hàng",
+        "address_placeholder": "Nhập địa chỉ"
+      }
+    }
+  }
 }
