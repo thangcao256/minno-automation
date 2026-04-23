@@ -17,7 +17,11 @@ def run_id():
 
 @pytest.fixture(scope="session")
 def test_data():
-    with open("test_data.json", encoding="utf-8") as f:
+    # Xác định đường dẫn tuyệt đối tới thư mục gốc của project
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(project_root, "test_data.json")
+    
+    with open(data_path, encoding="utf-8") as f:
         return json.load(f)
 
 @pytest.fixture(scope="session")
@@ -32,6 +36,7 @@ def browser_context_args(browser_context_args):
     return {
         **browser_context_args,
         "viewport": None,
+        "no_viewport": True
     }
 
 @pytest.fixture(autouse=True)

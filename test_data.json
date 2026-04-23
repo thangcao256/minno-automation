@@ -18,6 +18,10 @@
     { "name": "Phạm Minh D", "phone": "0933445566", "email": "minhd@minno.vn", "rank": "Đồng" },
     { "name": "Hoàng Anh E", "phone": "0944556677", "email": "anhe@gmail.com", "rank": "Vàng" }
   ],
+  "customer_ranks": [
+    { "name": "Hạng Diamond", "min_spend": 50000000, "discount": 10, "color": "Blue" },
+    { "name": "Hạng Platinum", "min_spend": 20000000, "discount": 5, "color": "Silver" }
+  ],
   "roles": [
     { "name": "Admin", "permissions": ["all"] },
     { "name": "Sales", "permissions": ["orders.view", "orders.create", "products.view"] },
@@ -72,5 +76,47 @@
         "address_placeholder": "Nhập địa chỉ"
       }
     }
+  },
+  "catalog_test": {
+    "categories": [
+      { "name": "Đồ điện tử", "code": "CAT-ELEC", "description": "Thiết bị công nghệ cao" }
+    ],
+    "groups": [
+      { "name": "Nhóm Hàng Hiệu", "code": "GRP-LUX", "note": "Hàng nhập khẩu" }
+    ],
+    "attributes": [
+      { 
+        "name": "Màu sắc", 
+        "values": ["Đỏ", "Xanh", "Vàng", "Đen"] 
+      },
+      { 
+        "name": "Kích thước", 
+        "values": ["S", "M", "L", "XL"] 
+      }
+    ],
+    "suppliers": [
+      { 
+        "name": "Tổng kho Miền Bắc", 
+        "code": "SUP-NORTH", 
+        "phone": "0900111222", 
+        "email": "kho@minno.vn", 
+        "city": "Hà Nội",
+        "district": "Quận Ba Đình",
+        "ward": "Phường Cống Vị",
+        "address": "123 Đường Láng, Đống Đa, Hà Nội",
+        "note": "Nhà cung cấp chính cho ngành hàng điện tử"
+      },
+      { 
+        "name": "Đại lý Miền Nam", 
+        "code": "SUP-SOUTH", 
+        "phone": "0944555666", 
+        "email": "hcm@minno.vn", 
+        "city": "Thành Phố Hồ Chí Minh",
+        "district": "Bình Thạnh",
+        "ward": "26",
+        "address": "377 Đinh Bộ Lĩnh",
+        "note": "Chuyên hàng gia dụng"
+      }
+    ]
   }
 }
