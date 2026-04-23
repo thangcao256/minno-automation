@@ -1,0 +1,18 @@
+{
+  "products": [
+    { "id": 1, "name": "iPhone 15 Pro Max 256GB", "sku": "IP15PM-BLUE-256" }
+  ],
+  "permission_test": {
+    "store_test": {
+      "name_prefix": "Cửa hàng E2E"
+    }
+  },
+  "catalog_test": {
+    "categories": [
+      { "name": "Đồ điện tử", "code": "CAT-ELEC" }
+    ],
+    "attributes": [
+      { "name": "Màu sắc", "values": ["Đỏ", "Xanh", "Vàng", "Đen"] }
+    ]
+  }
+}

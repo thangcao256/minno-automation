@@ -1,28 +1,21 @@
-from playwright.sync_api import Page, expect
-import os
-import re
+import allure
+from pages.dashboard.dashboard_page import DashboardPage
+from playwright.sync_api import Page
 
-def test_99_logout_functionality(page: Page):
+@allure.epic("Authentication")
+@allure.feature("Logout")
+@allure.severity(allure.severity_level.BLOCKER)
+def test_99_logout_robust(page: Page):
     """
-    [TEST CASE CUỐI] - Quy trình Đăng xuất hoàn chỉnh
-    Đảm bảo robot có thể thoát khỏi hệ thống và xóa sạch phiên làm việc.
+    [TC-LOGOUT-01]: Verify user can logout successfully and session is cleared.
     """
-    # 1. Đảm bảo đang ở Dashboard
-    page.wait_for_url(re.compile(r".*dashboard.*"), timeout=15000, wait_until="commit")
+    dashboard = DashboardPage(page)
     
-    # 2. Click vào Avatar người dùng (nút button cuối cùng trong header)
-    avatar_button = page.locator("header button").last
-    avatar_button.wait_for(state="visible", timeout=10000)
-    avatar_button.click()
+    # Ensure we are on Dashboard first
+    dashboard.verify_dashboard_ready()
     
-    # 3. Chọn nút Đăng xuất (Selector linh hoạt bao phủ mọi ngôn ngữ)
-    logout_item = page.locator("[role='menuitem'], a[href*='logout'], button:has-text('Logout'), button:has-text('Đăng xuất')").last
-    logout_item.wait_for(state="visible", timeout=5000)
-    logout_item.click()
+    # Execute Logout
+    dashboard.logout()
     
-    # 4. Xác nhận đã quay về màn hình đăng nhập
-    page.wait_for_url(re.compile(r".*/login|.*/auth/get-started"), timeout=15000)
-    
-    # 5. Kiểm tra sự hiện diện của ô nhập tài khoản để chốt kết quả PASS
-    account_input = page.locator("input:not([type='password'])").first
-    expect(account_input).to_be_visible(timeout=10000)
+    # Final check: URL should contain auth or login
+    assert "auth" in page.url or "login" in page.url

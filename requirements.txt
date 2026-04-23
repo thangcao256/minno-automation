@@ -1,7 +1,9 @@
 playwright
 pytest
 pytest-playwright
+allure-pytest
 pandas
 openpyxl
 tabulate
 python-dotenv
+logging

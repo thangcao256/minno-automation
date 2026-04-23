@@ -1,20 +1,10 @@
-from playwright.sync_api import Page, expect
-import os
-import re
+from pages.dashboard.dashboard_page import DashboardPage
+from playwright.sync_api import Page
 
 def test_01_login_to_minnosoft(page: Page):
     """
-    [TEST CASE ĐẦU] - Quy trình Đăng nhập & Xác nhận Dashboard
-    Đảm bảo hệ thống sẵn sàng và robot vào được Dashboard thành công.
+    [TC-LOGIN-01]: Verify successful login and Dashboard readiness.
+    Uses Page Object Model (POM) to validate the system state after login.
     """
-    # Robot sẽ tự động login qua fixture 'login_setup' trong conftest.py
-    # Ở đây ta xác nhận lại trạng thái để báo PASS
-    page.wait_for_url(re.compile(r".*dashboard.*"), timeout=25000, wait_until="commit")
-    
-    # Xác nhận Logo hệ thống
-    logo = page.get_by_alt_text("Logo").first
-    expect(logo).to_be_visible(timeout=15000)
-    
-    # Xác nhận Search bar (⌘K)
-    search_box = page.locator("button").filter(has_text="⌘K").first
-    expect(search_box).to_be_visible(timeout=10000)
+    dashboard = DashboardPage(page)
+    dashboard.verify_dashboard_ready()

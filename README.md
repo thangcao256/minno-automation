@@ -1,63 +1,85 @@
 # 🚀 MinnoSoft E2E Automation Testing Framework
 
-Bộ khung kiểm thử tự động toàn diện cho hệ thống quản lý bán hàng đa kênh **MinnoSoft (minno.vn)**. Được xây dựng nhằm mục tiêu kiểm thử luồng nghiệp vụ chính (Master Business Flow) một cách ổn định, bảo mật và dễ bảo trì.
+Bộ khung kiểm thử tự động toàn diện cho hệ thống quản lý bán hàng đa kênh **MinnoSoft (minno.vn)**. Framework được thiết kế theo mô hình chuyên nghiệp, tối ưu cho việc duy trì lâu dài và tích hợp vào quy trình CI/CD.
 
-## 🛠 Công nghệ sử dụng (Tech Stack)
+## 📌 Tổng quan dự án
+Dự án này tập trung vào việc tự động hóa các luồng nghiệp vụ quan trọng (Master Business Flow) của MinnoSoft, bao gồm:
+* **Quản trị:** Phân quyền nhân viên, cấu hình chi nhánh, quản lý vai trò.
+* **Sản phẩm:** Danh mục, nhóm hàng, thuộc tính biến thể, nhà cung cấp.
+* **Kênh bán hàng:** Quản lý khách hàng, nhóm VIP, tích điểm.
+* **Marketing:** Chương trình khuyến mãi, Voucher, chiến dịch quảng cáo.
 
-*   **Ngôn ngữ:** Python 3.13+
-*   **Thư viện kiểm thử:** [Pytest](https://docs.pytest.org/)
-*   **Công cụ Automation:** [Playwright](https://playwright.dev/python/)
-*   **Báo cáo:** Pytest-HTML
-*   **CI/CD:** GitHub Actions
+## 🏗️ Kiến trúc Framework
+* **Ngôn ngữ:** Python 3.13+
+* **Công cụ lõi:** [Playwright](https://playwright.dev/python/) (Tốc độ cao, tự động đợi phần tử).
+* **Test Runner:** [Pytest](https://docs.pytest.org/) (Fixture-based, linh hoạt).
+* **Mô hình thiết kế:** Page Object Model (POM) & Data-driven Testing.
+* **Báo cáo:** Allure Report & Pytest-HTML.
+* **Tích hợp:** GitHub Actions (Chạy định kỳ 00:00 Thứ Hai hàng tuần).
 
-## 📂 Cấu trúc thư mục (3-Tier Menu)
-
-Bộ test được tổ chức theo cấu trúc 3 lớp, khớp hoàn toàn với Menu Sidebar của MinnoSoft:
+## 📁 Cấu trúc thư mục (3-Tier Menu)
+Bộ test được tổ chức khớp 1:1 với Menu Sidebar của MinnoSoft:
 ```text
-tests/
-├── 01_trang_chu/           # Đăng nhập và Kiểm tra Dashboard
-├── 02_don_hang/            # Quản lý đơn hàng
-├── 03_san_pham/            # Danh sách sản phẩm, Danh mục
-├── ...                     # Các module khác (04 -> 10)
-└── 11_dang_xuat/           # Quy trình đăng xuất an toàn
+minno-automation/
+├── tests/                  # Kịch bản kiểm thử (Test Cases)
+│   ├── 01_trang_chu/       # Đăng nhập, Dashboard
+│   ├── 03_san_pham/        # Danh mục, Nguồn hàng, Thuộc tính
+│   ├── 05_kenh_ban_hang/   # Khách hàng, Nhóm khách
+│   ├── 10_cai_dat/         # Phân quyền, Cửa hàng
+│   └── 11_dang_xuat/       # Logout an toàn
+├── pages/                  # Page Object Model (Đang refactor)
+├── test_data.json          # Dữ liệu kiểm thử tập trung (JSON)
+├── UI/                     # Snapshots HTML hỗ trợ phân tích Offline
+├── conftest.py             # Fixtures (Đăng nhập tự động, Setup môi trường)
+├── export_test_plan.py     # Tool xuất Test Plan ra file Excel chuyên nghiệp
+├── setup.bat               # File cài đặt môi trường tự động (Windows)
+└── .env                    # Biến môi trường (URL, Tài khoản - Bảo mật)
 ```
 
-## ⚙️ Cài đặt môi trường (Setup)
+## ⚙️ Cài đặt & Sử dụng
 
-### 1. Dành cho người dùng Windows (Nhanh nhất)
-1.  Clone dự án về máy.
-2.  Nhấp đúp chuột vào file `setup.bat`. 
-    *   *Nó sẽ tự động tạo môi trường ảo (.venv), cài thư viện và tải trình duyệt Chromium.*
-3.  Tạo file `.env` bằng cách copy từ `.env.example` và điền tài khoản test của bạn.
+### 1. Chuẩn bị môi trường
+Trên Windows, bạn chỉ cần chạy file script để tự động hóa mọi bước:
+```bash
+./setup.bat
+```
+*Script sẽ tự động: Tạo venv, cài thư viện, cài browser Chromium.*
 
-### 2. Cấu hình PyCharm
-1.  Mở dự án trong PyCharm.
-2.  Vào `Settings` -> `Project` -> `Python Interpreter`.
-3.  Chọn **Add Interpreter** -> **Existing** -> Trỏ đến đường dẫn: `.venv\Scripts\python.exe`.
-4.  Lúc này, các nút **mũi tên xanh** sẽ xuất hiện cạnh từng test case để bạn nhấn chạy lẻ.
+### 2. Cấu hình tài khoản
+Tạo file `.env` từ `.env.example` và điền thông tin:
+```env
+BASE_URL=https://demo.minno.vn
+ADMIN_USER=your_email@minno.vn
+ADMIN_PASS=your_password
+STORE=TC  # Chi nhánh mặc định
+```
 
-## 🏃 Cách chạy kiểm thử
+### 3. Chạy kiểm thử
+* **Chạy tất cả (Headless):**
+  ```bash
+  pytest
+  ```
+* **Chạy có giao diện (Debug):**
+  ```bash
+  pytest --headed
+  ```
+* **Chạy module cụ thể:**
+  ```bash
+  pytest tests/03_san_pham/
+  ```
 
-### Chạy thủ công (Manual)
-*   **Chạy lẻ:** Nhấn nút mũi tên xanh trực tiếp trong PyCharm.
-*   **Chạy toàn bộ:** Mở Terminal và gõ:
-    ```bash
-    pytest
-    ```
-
-### Chạy tự động (Automation)
-*   Hệ thống tự động chạy vào **00:00 sáng Thứ Hai** hàng tuần trên GitHub Actions.
-*   Báo cáo HTML kèm hình ảnh/video lỗi sẽ được đính kèm trong phần **Artifacts**.
+## 📊 Báo cáo & Kế hoạch
+* **Báo cáo HTML:** Tự động tạo sau khi chạy trong thư mục `report.html`.
+* **Kế hoạch kiểm thử (Excel):** Chạy `python export_test_plan.py` để nhận file `MinnoSoft_E2E_TestPlan_Automation.xlsx` bao gồm các kịch bản SQL & API.
 
 ## 🔐 Bảo mật (Security)
-*   Thông tin tài khoản (`ADMIN_USER`, `ADMIN_PASS`) được lưu tại file `.env`.
-*   File `.env` đã được cấu hình trong `.gitignore` để **không bao giờ bị đẩy lên Git**, đảm bảo an toàn tuyệt đối cho tài khoản doanh nghiệp.
+* File `.env` chứa thông tin nhạy cảm đã được cấu hình trong `.gitignore` để không đẩy lên GitHub.
+* Trên CI/CD (GitHub Actions), các thông tin này được quản lý qua **Repository Secrets**.
 
-## 📊 Chiến lược Selector
-Framework sử dụng chiến thuật **Selector Bất biến (Immutable)**:
-*   Ưu tiên: `type="password"`, `type="submit"`, `alt="Logo"`.
-*   Không phụ thuộc vào ngôn ngữ hiển thị (Tiếng Anh/Tiếng Việt đều chạy đúng).
-*   Tự động xử lý luồng đăng nhập 2 bước và chọn chi nhánh theo biến môi trường `STORE`.
+## 🧠 Best Practices áp dụng
+* **Immutable Selectors:** Ưu tiên dùng `role`, `alt`, `type` thay vì các class CSS dễ thay đổi.
+* **No Hardcoded Data:** 100% dữ liệu test (SKU, Tên sản phẩm, Vai trò) lấy từ `test_data.json` kèm hậu tố `run_id` (Time-based) để tránh trùng lặp.
+* **Auto-Login:** Hệ thống tự động xử lý login và chọn cửa hàng tại `conftest.py`, giúp từng test case chỉ tập trung vào nghiệp vụ chính.
 
 ---
 *Phát triển bởi Đội ngũ QA Automation - 2026*
