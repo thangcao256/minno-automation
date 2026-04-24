@@ -11,7 +11,6 @@ class TestCustomerSettings:
     def test_create_customer_tag(self, page: Page, run_id):
         cust_settings = SettingsCustomerPage(page)
         cust_settings.navigate_to_tab("tag")
-        # Sử dụng hàm 'and_exit' để đóng Drawer sau khi tạo
         cust_settings.create_config_and_exit(f"Tag_{run_id}")
 
     @allure.story("Create Customer Group")

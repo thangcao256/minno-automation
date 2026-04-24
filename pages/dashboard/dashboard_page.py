@@ -30,5 +30,5 @@ class DashboardPage(BasePage):
         self.logout_item.click()
         
         # 3. Verify redirection
-        self.wait_for_url(re.compile(r".*/auth/.*"))
+        self.page.wait_for_url(re.compile(r".*/auth/.*"))
         self.logger.info("Logout successful.")
