@@ -11,8 +11,25 @@
     "categories": [
       { "name": "Đồ điện tử", "code": "CAT-ELEC" }
     ],
+    "suppliers": [
+      {
+        "name": "Công ty TNHH Giải pháp Công nghệ Minno",
+        "code": "NCC-MINNO-001",
+        "email": "contact@minno.vn",
+        "phone": "02473000000",
+        "province": "Thành phố Hà Nội",
+        "district": "Quận Cầu Giấy",
+        "ward": "Phường Dịch Vọng Hậu",
+        "address": "Số 1 Duy Tân"
+      }
+    ],
     "attributes": [
       { "name": "Màu sắc", "values": ["Đỏ", "Xanh", "Vàng", "Đen"] }
     ]
-  }
+  },
+  "customer_ranks": [
+    { "name": "Hạng Đồng", "min_point": 0 },
+    { "name": "Hạng Bạc", "min_point": 1000 },
+    { "name": "Hạng Vàng", "min_point": 5000 }
+  ]
 }

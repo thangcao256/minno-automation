@@ -48,38 +48,6 @@ class ProductPage(BasePage):
         if code: self.fill(self.code_input, code)
         self._save_and_verify(name)
 
-    @allure.step("Thêm nhà cung cấp: {name}")
-    def add_supplier(self, name: str, code: str = "", email: str = "", phone: str = "", 
-                     province: str = "", district: str = "", ward: str = "", address: str = ""):
-        """Thêm nhà cung cấp với đầy đủ các trường thông tin chi tiết"""
-        self.click(self.add_btn_locator.filter(visible=True).first)
-
-        # Điền thông tin qua Placeholder theo UI mới
-        self.page.get_by_placeholder("Nhập tên nhà cung cấp").fill(name)
-        if code:
-            self.page.get_by_placeholder("Nhập tên mã nhà cung cấp").fill(code)
-        if email:
-            self.page.get_by_placeholder("Nhập email").fill(email)
-        if phone:
-            self.page.get_by_placeholder("Nhập số điện thoại").fill(phone)
-
-        # Xử lý Dropdowns (Tỉnh/Huyện/Xã)
-        if province:
-            self.click(self.page.get_by_text("Chọn tỉnh").first)
-            self.click(self.page.get_by_role("option", name=province))
-        if district:
-            self.click(self.page.get_by_text("Chọn huyện").first)
-            self.click(self.page.get_by_role("option", name=district))
-        if ward:
-            self.click(self.page.get_by_text("Chọn xã").first)
-            self.click(self.page.get_by_role("option", name=ward))
-
-        # Địa chỉ chi tiết
-        if address:
-            self.page.get_by_placeholder("Nhập số nhà, đường,…").fill(address)
-
-        self._save_and_verify(name)
-
     @allure.step("Thêm thuộc tính: {attr_name}")
     def add_attribute(self, attr_name: str, values: list):
         self.click(self.add_btn_locator.filter(visible=True).first)
@@ -97,3 +65,33 @@ class ProductPage(BasePage):
         # Đợi nút Submit xuất hiện và click
         self.click(self.submit_btn_locator.last, force=True)
         self.page.wait_for_timeout(2000)
+
+    @allure.step("Thêm nhà cung cấp: {name}")
+    def add_supplier(self, name: str, code: str = "", email: str = "", phone: str = "", 
+                     province: str = "", district: str = "", ward: str = "", address: str = ""):
+        """Thêm nhà cung cấp với đầy đủ các trường thông tin chi tiết, hỗ trợ đa ngôn ngữ"""
+        self.click(self.add_btn_locator.filter(visible=True).first)
+
+        # Sử dụng name attribute để locator bền vững hơn placeholder
+        self.page.locator("input[name='name']").fill(name)
+        if code:
+            self.page.locator("input[name='code']").fill(code)
+        if email:
+            self.page.locator("input[name='email']").fill(email)
+        if phone:
+            self.page.locator("input[name='phoneNumber']").fill(phone)
+
+        # Xử lý Dropdowns (Tỉnh/Huyện/Xã)
+        # Vì phần này thường không có name trực tiếp trên button, ta dùng filter hoặc sibling của label
+        if province:
+            self.select_from_dropdown(self.page.locator("div:has(> label:text-is('Tỉnh/Thành')) button, div:has(> label:text-is('Province/City')) button").first, province)
+        if district:
+            self.select_from_dropdown(self.page.locator("div:has(> label:text-is('Huyện/Quận')) button, div:has(> label:text-is('District')) button").first, district)
+        if ward:
+            self.select_from_dropdown(self.page.locator("div:has(> label:text-is('Xã/Phường')) button, div:has(> label:text-is('Ward')) button").first, ward)
+
+        # Địa chỉ chi tiết
+        if address:
+            self.page.locator("input[name='address']").fill(address)
+
+        self._save_and_verify(name)

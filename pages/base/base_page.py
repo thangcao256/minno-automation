@@ -156,6 +156,26 @@ class BasePage:
         self.page.screenshot(path=path)
         self._log(f"Screenshot saved: {path}")
 
+    def select_from_dropdown(self, trigger_target: Target, option_name: str):
+        """Hỗ trợ chọn option từ custom dropdown (Radix/Shadcn) có hỗ trợ cuộn"""
+        self._log(f"Selecting option '{option_name}' from dropdown: {trigger_target}")
+        
+        # 1. Click mở dropdown
+        self.click(trigger_target)
+        
+        # 2. Tìm option. Radix thường render list trong Portal (cuối body)
+        # Ta dùng locator tìm theo role option hoặc text
+        option_locator = self.page.get_by_role("option", name=re.compile(f".*{option_name}.*", re.I)).first
+        
+        # Nếu không tìm thấy theo role, thử tìm theo text đơn thuần trong các popup/viewport
+        if not self.is_visible(option_locator, timeout=2000):
+            option_locator = self.page.locator("[role='listbox'], .radix-select-content").get_by_text(option_name, exact=False).first
+
+        # 3. Cuộn và Click
+        option_locator.scroll_into_view_if_needed()
+        option_locator.click()
+        self.wait_for_load("domcontentloaded")
+
     def try_click(self, target: Target, timeout: int = 3000) -> bool:
         try:
             el = self._get_locator(target)

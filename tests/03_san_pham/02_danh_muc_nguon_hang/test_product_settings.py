@@ -35,4 +35,3 @@ class TestProductSettings:
         prod_page = ProductPage(page)
         prod_page.navigate_to_category_tab("supplier")
         prod_page.add_supplier(name=unique_name)
-        page.keyboard.press("Escape")
