@@ -118,6 +118,9 @@ class BasePage:
     def wait_for_url(self, url_pattern: str):
         self.page.wait_for_url(url_pattern)
 
+    def wait(self, seconds: float):
+        self.page.wait_for_timeout(int(seconds * 1000))
+
     # =========================
     # 🔹 ASSERT / VERIFY LAYER
     # =========================

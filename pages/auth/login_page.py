@@ -5,22 +5,22 @@ import re
 class LoginPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        # Locators (Bền vững)
-        self.username_input = "input:not([type='password'])"
-        self.password_input = "input[type='password']"
+        # Locators (Cập nhật theo UI mới)
+        self.username_input = "input[name='email']"
+        self.password_input = "input#password"
         self.submit_button = "button[type='submit']"
-        self.logo = "img[alt='Logo']"
+        self.logo = "svg" # Logo bây giờ là SVG
         self.select_store_pattern = re.compile(r".*/auth/select-stores.*")
 
     def login(self, username, password):
         """Thực hiện luồng đăng nhập 2 bước của MinnoSoft"""
-        # Bước 1: Username
+        # Bước 1: Username/Email
         self.fill(self.username_input, username)
-        self.page.keyboard.press("Enter")
+        self.click(self.submit_button) # Nút 'Continue'
         
         # Bước 2: Password
         self.fill(self.password_input, password)
-        self.click(self.submit_button)
+        self.click(self.submit_button) # Nút 'Sign in'
 
     def select_store(self, store_name: str):
         """Chọn chi nhánh"""
