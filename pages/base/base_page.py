@@ -1,3 +1,4 @@
+import re
 from playwright.sync_api import Page, Locator, expect
 import logging
 import os
@@ -34,6 +35,15 @@ class BasePage:
     def wait_for_load(self, state: str = "networkidle"):
         self.page.wait_for_load_state(state)
 
+    def wait_for_spinner(self, timeout: int = 15000):
+        """Đợi cho các spinner/loading biến mất"""
+        try:
+            spinner = self.page.locator(".animate-spin, .loading-spinner, [role='status']").first
+            if spinner.is_visible():
+                spinner.wait_for(state="hidden", timeout=timeout)
+        except:
+            pass
+
     # =========================
     # 🔹 SMART ACTIONS
     # =========================
@@ -61,15 +71,66 @@ class BasePage:
                 self.wait_for_load()
 
     def fill(self, target: Target, value: str):
+        """Basic fill with auto-clear"""
         el = self._get_locator(target)
-
         self._log(f"Fill '{value}' into: {target}")
-
         el.wait_for(state="visible", timeout=10000)
         el.scroll_into_view_if_needed()
-
-        el.clear()
         el.fill(value)
+
+    def fill_smart(self, target: Target, value: str):
+        """Nâng cao: Xóa bằng phím tắt để kích hoạt React state change"""
+        el = self._get_locator(target)
+        self._log(f"Smart Fill '{value}' into: {target}")
+        el.wait_for(state="visible", timeout=10000)
+        el.click()
+        # Ctrl+A -> Backspace
+        self.page.keyboard.press("Control+A")
+        self.page.keyboard.press("Backspace")
+        el.type(value, delay=50) # Type chậm hơn một chút để React kịp bắt event
+
+    def fill_by_label(self, label_text: str, value: str, is_exact: bool = False):
+        """Điền input dựa trên Label - Cực kỳ ổn định cho React"""
+        self._log(f"Fill by label '{label_text}': {value}")
+        
+        # Tạo các mẫu tìm kiếm: Tuyệt đối trước, Gần đúng sau
+        patterns = [
+            re.compile(f"^{label_text}$", re.I),
+            re.compile(f".*{label_text}.*", re.I)
+        ]
+        
+        target_el = None
+        for pattern in patterns:
+            # Các chiến thuật từ chính xác đến linh hoạt
+            strategies = [
+                lambda p=pattern: self.page.get_by_label(p, exact=True),
+                lambda p=pattern: self.page.get_by_role("textbox", name=p),
+                lambda p=pattern: self.page.get_by_role("spinbutton", name=p),
+                # Chiến thuật vùng chứa hẹp: tìm div nhỏ nhất chứa label và có input
+                lambda p=pattern: self.page.locator("div.space-y-1, .flex, .grid, fieldset").filter(has=self.page.get_by_text(p, exact=True)).locator("input, textarea, [role='textbox'], [role='spinbutton']").first
+            ]
+
+            for i, strategy in enumerate(strategies):
+                try:
+                    locator = strategy()
+                    # Kiểm tra thực sự có element và nó đang hiển thị
+                    if locator.count() > 0:
+                        locator.wait_for(state="visible", timeout=2000)
+                        target_el = locator
+                        self._log(f"Strategy {i+1} succeeded for label '{label_text}' with pattern '{pattern.pattern}'")
+                        break
+                except:
+                    continue
+            
+            if target_el:
+                break
+
+        if target_el:
+            self.fill_smart(target_el, value)
+        else:
+            # Dự phòng cuối cùng: dùng get_by_label mặc định để lấy log lỗi chuẩn
+            self._log(f"All strategies failed for '{label_text}', trying final fallback...")
+            self.fill_smart(self.page.get_by_label(label_text), value)
 
     def hover(self, target: Target):
         el = self._get_locator(target)
