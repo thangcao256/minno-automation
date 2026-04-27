@@ -156,24 +156,42 @@ class BasePage:
         self.page.screenshot(path=path)
         self._log(f"Screenshot saved: {path}")
 
-    def select_from_dropdown(self, trigger_target: Target, option_name: str):
-        """Hỗ trợ chọn option từ custom dropdown (Radix/Shadcn) có hỗ trợ cuộn"""
+    def select_from_dropdown(self, trigger_target: Target, option_name: str = ""):
+        """
+        Hỗ trợ chọn option từ custom dropdown:
+        - Ưu tiên tìm khớp gần đúng theo option_name.
+        - Nếu không thấy hoặc option_name trống, chọn cái đầu tiên.
+        """
         self._log(f"Selecting option '{option_name}' from dropdown: {trigger_target}")
         
         # 1. Click mở dropdown
         self.click(trigger_target)
-        
-        # 2. Tìm option. Radix thường render list trong Portal (cuối body)
-        # Ta dùng locator tìm theo role option hoặc text
-        option_locator = self.page.get_by_role("option", name=re.compile(f".*{option_name}.*", re.I)).first
-        
-        # Nếu không tìm thấy theo role, thử tìm theo text đơn thuần trong các popup/viewport
-        if not self.is_visible(option_locator, timeout=2000):
-            option_locator = self.page.locator("[role='listbox'], .radix-select-content").get_by_text(option_name, exact=False).first
+        self.page.wait_for_timeout(500) # Đợi animation mở popup
 
-        # 3. Cuộn và Click
-        option_locator.scroll_into_view_if_needed()
-        option_locator.click()
+        # 2. Xử lý tìm kiếm và chọn
+        found = False
+        if option_name:
+            # Thử tìm theo role='option' có chứa text (không phân biệt hoa thường)
+            # Dùng regex để khớp gần đúng
+            option_locator = self.page.get_by_role("option").filter(has_text=re.compile(f".*{option_name}.*", re.I)).first
+            
+            if self.is_visible(option_locator, timeout=2000):
+                option_locator.scroll_into_view_if_needed()
+                option_locator.click()
+                found = True
+        
+        if not found:
+            self._log("Option not found or not provided, selecting the first available option.")
+            # Chọn cái đầu tiên trong listbox
+            first_option = self.page.get_by_role("option").first
+            if self.is_visible(first_option, timeout=2000):
+                first_option.scroll_into_view_if_needed()
+                first_option.click()
+            else:
+                # Dự phòng nếu không dùng role option (ví dụ custom div)
+                fallback_first = self.page.locator("[role='listbox'] div, .radix-select-content div").first
+                fallback_first.click()
+
         self.wait_for_load("domcontentloaded")
 
     def try_click(self, target: Target, timeout: int = 3000) -> bool:

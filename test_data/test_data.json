@@ -1,6 +1,22 @@
 {
   "products": [
-    { "id": 1, "name": "iPhone 15 Pro Max 256GB", "sku": "IP15PM-BLUE-256" }
+    { 
+      "id": 1, 
+      "name": "iPhone 15 Pro Max 256GB", 
+      "SKU_code": "IP15PM-BLUE-256",
+      "bar_code": "8806090123456",
+      "sale_price": 32000000,
+      "purchase_price": 28000000,
+      "is_saleable": true,
+      "is_required_inventory": true,
+      "allow_negative_stock": false,
+      "inventory_quantity": 50,
+      "category": "Đồ điện tử",
+      "supplier": "Công ty TNHH Giải pháp Công nghệ Minno",
+      "group": "Điện thoại",
+      "status": "Đang hoạt động",
+      "note": "Sản phẩm test tự động E2E"
+    }
   ],
   "permission_test": {
     "store_test": {
