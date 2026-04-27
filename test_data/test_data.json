@@ -2,22 +2,20 @@
   "products": [
     { 
       "id": 1, 
-      "name": "iPhone 15 Pro Max 256GB", 
-      "SKU_code": "IP15PM-BLUE-256",
-      "bar_code": "8806090123456",
-      "sale_price": 28000,
-      "purchase_price": 32000,
-      "is_saleable": true,
-      "is_internal_use": false,
-      "is_required_inventory": true,
-      "multiple variants": false,
-      "allow_negative_stock": false,
-      "inventory_quantity": 50,
-      "category": "Đồ điện tử",
+      "name": "Áo thun Minno Premium", 
+      "SKU_code": "AT-MINNO",
+      "has_variants": true,
+      "variants_config": [
+        { "attribute": "Màu sắc", "values": ["Đen", "Trắng"] },
+        { "attribute": "Kích thước", "values": ["L", "XL"] }
+      ],
+      "manage_inventory": true,
+      "total_stock": [10, 20, 30, 40],
+      "batch_name": "LOT-2026",
+      "expiry_date": "31/12/2026",
+      "category": "Thời trang",
       "supplier": "Công ty TNHH Giải pháp Công nghệ Minno",
-      "group": "Điện thoại",
-      "status": "Đang hoạt động",
-      "note": "Sản phẩm test tự động E2E"
+      "status": "Đang hoạt động"
     }
   ],
   "permission_test": {
