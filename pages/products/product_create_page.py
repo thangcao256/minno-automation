@@ -32,7 +32,7 @@ class ProductCreatePage(BasePage):
         self.radio_negative_allow = get_radio("Allow")
 
         # --- Locators: Buttons ---
-        self.save_btn = self.page.locator("header button, footer button, .sticky button").filter(has_text=re.compile(r"^Save$|^Lưu$", re.I)).first
+        self.save_btn = self.page.get_by_role("button", name=re.compile(r"^Lưu$|^Save$", re.I))
         self.enter_quantity_btn = self.page.get_by_role("button", name=re.compile(r"Enter quantity", re.I))
 
         # --- Locators: Dropdowns ---
@@ -95,7 +95,6 @@ class ProductCreatePage(BasePage):
         else:
             self.click(self.radio_inv_no)
 
-        # 6. CUỐI CÙNG: Lưu toàn bộ sản phẩm
         self.save()
 
     def _setup_variants(self, variants_config):
@@ -296,12 +295,5 @@ class ProductCreatePage(BasePage):
 
     @allure.step("Lưu sản phẩm")
     def save(self):
-        self._log("Clicking final Save button for the product.")
-        if self.is_visible(self.save_btn):
-            self.click(self.save_btn)
-            # Thay vì wait(2000), ta đợi URL thay đổi hoặc quay về trang danh sách một cách chủ động
-            try:
-                self.page.wait_for_url(re.compile(r".*/products$|.*/products/.*"), timeout=10000)
-                self._log("Product saved and redirected successfully.")
-            except Exception as e:
-                self._log(f"Redirection after save took too long or failed: {e}")
+        self.click(self.save_btn.filter(visible=True).first)
+        self.page.wait_for_url(re.compile(r".*/products$|.*/products/.*"), timeout=15000)
