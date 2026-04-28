@@ -7,11 +7,19 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+# Cấp quyền rõ ràng cho GITHUB_TOKEN
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
     name: Run E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - uses: actions/checkout@v4
@@ -35,8 +43,9 @@ jobs:
         BASE_URL: ${{ secrets.BASE_URL || 'https://demo.minno.vn' }}
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
-        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       run: |
+        # Đảm bảo thư mục kết quả tồn tại
+        mkdir -p allure-results
         pytest --alluredir=allure-results
       continue-on-error: true
 
@@ -55,4 +64,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: allure-history
         publish_branch: gh-pages
-        force_orphan: true # Giúp tạo nhánh mới nếu chưa tồn tại
+        force_orphan: true
