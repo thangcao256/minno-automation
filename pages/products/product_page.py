@@ -12,7 +12,7 @@ class ProductPage(BasePage):
         
         # 1. Nút THÊM (Vạn năng): Tìm nút có text 'Thêm' và đang HIỂN THỊ
         # Ta không giới hạn class để tránh việc mỗi tab mỗi class khác nhau
-        self.add_btn_locator = self.page.locator("//*[@id='root']/div/div/main/div/div[2]/div/div/div[1]/div/div[2]/button")
+        self.add_btn_locator = self.page.locator("//*[@id='root']/div/div/main/div/div[2]/div/div/div[1]/div/div/div[2]/button")
         
         # 2. Nút XÁC NHẬN / LƯU (Vạn năng): Nằm trong Dialog, thường có màu xanh hoặc text 'Xác nhận/Lưu'
         # Ta lấy cái cuối cùng xuất hiện trong DOM
@@ -61,11 +61,6 @@ class ProductPage(BasePage):
                 self.click(add_val_btn)
         self._save_and_verify(attr_name)
 
-    def _save_and_verify(self, name: str):
-        # Đợi nút Submit xuất hiện và click
-        self.click(self.submit_btn_locator.last, force=True)
-        self.page.wait_for_timeout(2000)
-
     @allure.step("Thêm nhà cung cấp: {name}")
     def add_supplier(self, name: str, code: str = "", email: str = "", phone: str = "", 
                      province: str = "", district: str = "", ward: str = "", address: str = ""):
@@ -95,3 +90,8 @@ class ProductPage(BasePage):
             self.page.locator("input[name='address']").fill(address)
 
         self._save_and_verify(name)
+
+    def _save_and_verify(self, name: str):
+        # Đợi nút Submit xuất hiện và click
+        self.click(self.submit_btn_locator.last, force=True)
+        self.page.wait_for_timeout(2000)

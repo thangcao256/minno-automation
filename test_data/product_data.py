@@ -71,19 +71,23 @@ PRODUCT_MATRIX_DATA = {
         "name": f"SP Biến Thể 4 Dòng {run_id}",
         "SKU": f"SKU-VAR4-{run_id}",
         "for_sale": True,
+        "note": f"NOTE-S2V2I2N2-{run_id}",
+        "bar_code": f"BARCODE-S2V2I2N2-{run_id}",
         "has_variants": True,
         "variants_config": [
             {"attribute": "Color", "values": ["Black", "Red"]},
             {"attribute": "Gender", "values": ["Male", "Female"]}
         ],
         "manage_inventory": True,
-        "allow_negative": False,
+        "allow_negative": True,
         "batch_name": f"LOT-V4-{run_id}",
         "expiry_date": "31/12/2026",
         "total_stock": [10, 20, 30, 40],
         "wholesale_prices": [100000, 110000, 120000, 130000], # Giá sỉ từng mẫu
         "sale_prices": [200000, 210000, 220000, 230000],     # Giá lẻ từng mẫu
         "category": "Danh mục 2504_0841",
+        "group": "Nhóm 2504_0851",
+        "supplier": "Đại lý miền nam",
         "images": [DEFAULT_IMAGE],
         "variant_images": [DEFAULT_IMAGE, DEFAULT_IMAGE, DEFAULT_IMAGE, DEFAULT_IMAGE]
     },
@@ -91,6 +95,8 @@ PRODUCT_MATRIX_DATA = {
     "S2_V2_I2_N2": {
         "name": f"SP Biến Thể Nội Bộ {run_id}",
         "SKU": f"SKU-S2V2I2N2-{run_id}",
+        "note": f"NOTE-S2V2I2N2-{run_id}",
+        "bar_code": f"BARCODE-S2V2I2N2-{run_id}",
         "for_sale": False,
         "has_variants": True,
         "variants_config": [

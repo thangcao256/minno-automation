@@ -55,6 +55,8 @@ class ProductCreatePage(BasePage):
         self.fill(self.name_input, data.get('name', ''))
         if 'SKU' in data: self.fill(self.sku_input, data['SKU'])
         if 'images' in data: self.upload_images(data['images'])
+        if 'bar_code' in data: self.fill(self.bar_code_input, data['bar_code'])
+        if 'note' in data: self.fill(self.note_textarea, data['note'])
 
         # 2. Phân loại
         if 'group' in data: self.select_from_dropdown(self.group_dropdown, data['group'])
@@ -94,7 +96,6 @@ class ProductCreatePage(BasePage):
                 self.click(self.radio_negative_no)
         else:
             self.click(self.radio_inv_no)
-
         self.save()
 
     def _setup_variants(self, variants_config):

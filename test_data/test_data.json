@@ -1,23 +1,4 @@
 {
-  "products": [
-    { 
-      "id": 1, 
-      "name": "Áo thun Minno Premium", 
-      "SKU_code": "AT-MINNO",
-      "has_variants": true,
-      "variants_config": [
-        { "attribute": "Màu sắc", "values": ["Đen", "Trắng"] },
-        { "attribute": "Kích thước", "values": ["L", "XL"] }
-      ],
-      "manage_inventory": true,
-      "total_stock": [10, 20, 30, 40],
-      "batch_name": "LOT-2026",
-      "expiry_date": "31/12/2026",
-      "category": "Thời trang",
-      "supplier": "Công ty TNHH Giải pháp Công nghệ Minno",
-      "status": "Đang hoạt động"
-    }
-  ],
   "permission_test": {
     "store_test": {
       "name_prefix": "Cửa hàng E2E"
