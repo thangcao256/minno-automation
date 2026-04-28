@@ -43,13 +43,16 @@ jobs:
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
       run: |
-        # Đọc file test_suite.txt, loại bỏ comment và dòng trống, sau đó chạy pytest
-        TEST_FILES=$(grep -v '^#' test_suite.txt | grep -v '^$')
+        # Đảm bảo thư mục kết quả tồn tại
+        mkdir -p allure-results
+        # Đọc file test_suite.txt, loại bỏ comment, dòng trống và ký tự \r của Windows
+        TEST_FILES=$(sed 's/\r//' test_suite.txt | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
+        echo "Running tests: $TEST_FILES"
         if [ -z "$TEST_FILES" ]; then
           echo "No tests found in test_suite.txt"
           exit 0
         fi
-        pytest $TEST_FILES
+        pytest $TEST_FILES --alluredir=allure-results
       continue-on-error: true
 
     - name: Allure Report Action
@@ -66,7 +69,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: allure-report # Đẩy nội dung thư mục report đã render
+        publish_dir: allure-report
         publish_branch: gh-pages
         force_orphan: true
 
