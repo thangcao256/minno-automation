@@ -39,13 +39,12 @@ jobs:
 
     - name: Run Tests
       env:
+        # Lấy từ Repository Secrets
         BASE_URL: ${{ secrets.BASE_URL || 'https://demo.minno.vn' }}
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
-        ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
+        ADMIN_PASS: ${{ secrets.ADMIN_PASS || secrets.ADMIN_PASSWORD }}
       run: |
-        # Đảm bảo thư mục kết quả tồn tại
         mkdir -p allure-results
-        # Đọc file test_suite.txt, loại bỏ comment, dòng trống và ký tự \r của Windows
         TEST_FILES=$(sed 's/\r//' test_suite.txt | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
         echo "Running tests: $TEST_FILES"
         if [ -z "$TEST_FILES" ]; then
