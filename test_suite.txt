@@ -1,10 +1,11 @@
-# Danh sách các test case thực hiện trong CI/CD
+# Danh sách các test case thực hiện trong CI/CD (Đã sửa đường dẫn chuẩn)
 
-# 1. Module Khách hàng
-tests/05_khach_hang/test_customer_setting.py
-
-# 2. Module Cấu hình
+# 1. Module Sản phẩm
+tests/03_san_pham/01_danh_sach_san_pham/test_product_coverage.py
 tests/03_san_pham/02_danh_muc_nguon_hang/test_product_settings.py
 
-# 3. Module Sản phẩm
-tests/03_san_pham/01_danh_sach_san_pham/test_product_coverage.py
+# 2. Module Khách hàng (Nằm trong 10_cai_dat)
+tests/10_cai_dat/05_khach_hang/test_customer_settings.py
+
+# 3. Đăng xuất (Chạy cuối cùng)
+tests/11_dang_xuat/test_99_logout.py
