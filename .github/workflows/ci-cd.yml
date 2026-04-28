@@ -43,7 +43,13 @@ jobs:
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
       run: |
-        pytest
+        # Đọc file test_suite.txt, loại bỏ comment và dòng trống, sau đó chạy pytest
+        TEST_FILES=$(grep -v '^#' test_suite.txt | grep -v '^$')
+        if [ -z "$TEST_FILES" ]; then
+          echo "No tests found in test_suite.txt"
+          exit 0
+        fi
+        pytest $TEST_FILES
       continue-on-error: true
 
     - name: Allure Report Action
