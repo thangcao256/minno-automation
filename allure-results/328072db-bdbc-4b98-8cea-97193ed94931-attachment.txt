@@ -1,0 +1,11 @@
+[32mINFO    [0m LoginPage:base_page.py:26 Navigate to: https://demo.minno.vn
+[32mINFO    [0m LoginPage:base_page.py:26 Fill 'thangminhcaoss@gmail.com' into: input[name='email']
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button[type='submit'] (attempt 1)
+[32mINFO    [0m LoginPage:base_page.py:26 Fill 'Thangcao256' into: input#password
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button[type='submit'] (attempt 1)
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button.flex.items-center.w-full (attempt 1)
+[32mINFO    [0m SettingsCustomerPage:base_page.py:26 Navigate to: https://demo.minno.vn/settings/customer?tab=rank
+[32mINFO    [0m SettingsCustomerPage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/settings/customer?tab=rank'> selector='internal:role=button[name=/Thêm|Add/i] >> visible=true >> nth=0'> (attempt 1)
+[32mINFO    [0m SettingsCustomerPage:base_page.py:26 Fill 'Hạng Đồng 2804_1207' into: <Locator frame=<Frame name= url='https://demo.minno.vn/settings/customer?tab=rank'> selector="input[name='name'], input:not([type='checkbox']) >> nth=0">
+[32mINFO    [0m SettingsCustomerPage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/settings/customer?tab=rank'> selector="button[type='submit'] >> nth=0"> (attempt 1)
+[32mINFO    [0m SettingsCustomerPage:customer_page.py:31 Searching page 1 for 'Hạng Đồng 2804_1207'...

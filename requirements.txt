@@ -2,6 +2,7 @@ playwright
 pytest
 pytest-playwright
 allure-pytest
+pytest-html
 pandas
 openpyxl
 tabulate

@@ -1,0 +1,24 @@
+[32mINFO    [0m LoginPage:base_page.py:26 Navigate to: https://demo.minno.vn
+[32mINFO    [0m LoginPage:base_page.py:26 Fill 'thangminhcaoss@gmail.com' into: input[name='email']
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button[type='submit'] (attempt 1)
+[32mINFO    [0m LoginPage:base_page.py:26 Fill 'Thangcao256' into: input#password
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button[type='submit'] (attempt 1)
+[32mINFO    [0m LoginPage:base_page.py:26 Click: button.flex.items-center.w-full (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Fill 'SP Dịch Vụ 2804_1207' into: input[name='name']
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Fill 'SKU-S1V1I1-2804_1207' into: input[name='SKU_code']
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Selecting option 'Nhóm 2504_0851' from dropdown: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:role=combobox >> nth=-3'>
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:role=combobox >> nth=-3'> (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Selecting option 'Danh mục 2504_0841' from dropdown: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:role=combobox >> nth=-2'>
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:role=combobox >> nth=-2'> (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector="div >> internal:has-text=/^For sale$/i >> button[role='radio'] >> nth=0"> (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector="div >> internal:has-text=/^No$/i >> button[role='radio'] >> nth=0"> (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Fill by label 'Sale price': 50000
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Strategy 1 succeeded for label 'Sale price' with pattern '^Sale price$'
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Smart Fill '50000' into: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:label=/^Sale price$/i'>
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector="div >> internal:has-text=/^No tracking$/i >> button[role='radio'] >> nth=0"> (attempt 1)
+[32mINFO    [0m ProductCreatePage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products/new'> selector='internal:role=button[name=/^Lưu$|^Save$/i] >> visible=true >> nth=0'> (attempt 1)
+[32mINFO    [0m ProductListPage:base_page.py:26 Searching for product: SP Dịch Vụ 2804_1207
+[32mINFO    [0m ProductListPage:base_page.py:26 Click: <Locator frame=<Frame name= url='https://demo.minno.vn/products'> selector="button:has(svg.bi-search), button:has(svg path[d*='M11.742'])"> (attempt 1)
+[32mINFO    [0m ProductListPage:base_page.py:26 Smart Fill 'SP Dịch Vụ 2804_1207' into: <Locator frame=<Frame name= url='https://demo.minno.vn/products'> selector='internal:attr=[placeholder=/Search|Tìm kiếm/i] >> visible=true >> nth=0'>
+[32mINFO    [0m ProductListPage:base_page.py:26 Verifying product 'SP Dịch Vụ 2804_1207' in the first row.
+[32mINFO    [0m ProductListPage:base_page.py:26 Product verification successful.

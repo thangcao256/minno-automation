@@ -11,6 +11,10 @@ from pages.dashboard.dashboard_page import DashboardPage
 # Nạp các biến từ file .env
 load_dotenv()
 
+def pytest_runtest_setup(item):
+    """In tên test case ra terminal trước khi bắt đầu chạy"""
+    print(f"\n🚀 STARTING TEST: {item.nodeid}")
+
 @pytest.fixture(scope="session")
 def run_id():
     """Tạo một ID duy nhất theo thời gian"""
