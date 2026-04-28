@@ -35,18 +35,10 @@ jobs:
         BASE_URL: ${{ secrets.BASE_URL || 'https://demo.minno.vn' }}
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       run: |
-        # Chạy test và tạo dữ liệu cho Allure
         pytest --alluredir=allure-results
       continue-on-error: true
-
-    - name: Get Allure history
-      uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
 
     - name: Allure Report Action
       uses: simple-elf/allure-report-action@master
@@ -58,19 +50,9 @@ jobs:
 
     - name: Deploy report to Github Pages
       if: always()
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: allure-history
         publish_branch: gh-pages
-
-    - name: Upload Test Report Artifact
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: e2e-test-results
-        path: |
-          allure-results/
-          screenshots/
-          videos/
-        retention-days: 7
+        force_orphan: true # Giúp tạo nhánh mới nếu chưa tồn tại
