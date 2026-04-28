@@ -7,7 +7,6 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
-# Cấp quyền rõ ràng cho GITHUB_TOKEN
 permissions:
   contents: write
   pages: write
@@ -44,9 +43,7 @@ jobs:
         ADMIN_USER: ${{ secrets.ADMIN_USER }}
         ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
       run: |
-        # Đảm bảo thư mục kết quả tồn tại
-        mkdir -p allure-results
-        pytest --alluredir=allure-results
+        pytest
       continue-on-error: true
 
     - name: Allure Report Action
@@ -54,6 +51,7 @@ jobs:
       if: always()
       with:
         allure_results: allure-results
+        allure_report: allure-report
         allure_history: allure-history
         keep_reports: 20
 
@@ -62,6 +60,17 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: allure-history
+        publish_dir: allure-report # Đẩy nội dung thư mục report đã render
         publish_branch: gh-pages
         force_orphan: true
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: |
+          allure-results/
+          screenshots/
+          videos/
+        retention-days: 7
