@@ -41,7 +41,7 @@ def login_setup(page: Page, run_id, test_data):
     base_url = os.getenv("BASE_URL", "https://demo.minno.vn")
     admin_user = os.getenv("ADMIN_USER")
     admin_pass = os.getenv("ADMIN_PASS")
-    fallback_store = os.getenv("STORE", "TC")
+    fallback_store = os.getenv("STORE", "TMC")
     
     login_page = LoginPage(page)
     dashboard = DashboardPage(page)
@@ -52,10 +52,7 @@ def login_setup(page: Page, run_id, test_data):
     # 2. Thực hiện Login (nếu chưa login)
     if not dashboard.is_visible(dashboard.user_menu_avatar, timeout=3000):
         login_page.login(admin_user, admin_pass)
-        try:
-            login_page.select_store(fallback_store)
-        except:
-            pass
+        login_page.select_store(fallback_store)
         login_page.verify_login_success()
     
     yield # <--- TEST CASE CHẠY TẠI ĐÂY
