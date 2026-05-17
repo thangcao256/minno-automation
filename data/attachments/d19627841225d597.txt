@@ -1,0 +1,2 @@
+
+🚀 STARTING TEST: tests/03_san_pham/02_danh_muc_nguon_hang/test_product_settings.py::TestProductSettings::test_add_product_group[chromium]

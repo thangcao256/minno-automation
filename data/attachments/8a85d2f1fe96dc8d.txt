@@ -1,0 +1,2 @@
+
+🚀 STARTING TEST: tests/03_san_pham/01_danh_sach_san_pham/test_product_coverage.py::TestProductCreationCoverage::test_p02_create_standard_inventory_product[chromium]

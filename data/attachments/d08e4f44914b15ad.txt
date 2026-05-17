@@ -1,0 +1,2 @@
+
+🚀 STARTING TEST: tests/10_cai_dat/05_khach_hang/test_customer_settings.py::TestCustomerSettings::test_create_customer_rank[chromium]
